@@ -138,6 +138,7 @@ body {
 
 #header-subtitle {
 	color: var(--color-accent);
+	font-style: italic;
 }
 
 #main-body {
@@ -172,18 +173,28 @@ body {
 	border: 1px dashed white;
 	border-radius: 10px;
 	padding: 1rem;
+	gap: 5px;
 }
 
 .card-title {
 	align-self: center;
 	font-weight: 700;
+	font-size: 1.25rem;
 	border-bottom: 1px solid var(--color-light);
 	margin-bottom: .5rem;
+	text-align: center;
 }
 
 .card-list-section {
 	flex-direction: column;
 	justify-content: space-between;
+	gap: 10px;
+}
+
+.item-group {
+	flex-direction: column;
+	gap: 3px;
+	border-bottom: 2px solid var(--color-dark);
 }
 
 .entry-line {
@@ -191,28 +202,38 @@ body {
 	gap: .5rem;
 	cursor: pointer;
 	color: var(--color-light);
-	fill: currentColor;
+}
+
+.edit {
+	margin-left: auto;
 }
 
 .card-item {
-	font-weight: 100;
+	font-weight: 400;
 }
 
-.box:hover {
-	box-shadow: 0 0 10px white;
+.due-time {
+	font-weight: 100;
+	font-size: 1rem;
+	text-align: end;
+}
+
+.svg-class:hover {
+	filter: invert(90%) sepia(94%) saturate(3261%) hue-rotate(211deg) brightness(102%) contrast(106%);
 }
 
 .hover-show {
 	display: none;
-	transition: all 350ms;
+	transition: display 350ms;
 }
 
 .entry-line:hover .hover-show {
 	display: unset;
 }
 
-.delete:hover {
-
+.btn-group {
+	justify-content: end;
+	margin-top: 1rem;
 }
 
 footer {

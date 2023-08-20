@@ -7,7 +7,7 @@ const addItem = (list) => {
     // const priority = prompt("Enter the priority of the task:")
     const title = 'Sick Title'
     const desc = 'Sick desription'
-    const due = 'Sick due date'
+    const due = new Date("10/30/2023")
     const priority = 'Sick priority'
     const newItem = new Item(title, desc, due, priority)
 

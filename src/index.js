@@ -2,8 +2,6 @@ import { addProject } from "./addProject";
 import { addList } from "./addList";
 import { addItem } from "./addItem";
 import { toggleComplete } from "./toggleComplete";
-import { remove } from "./remove";
-import { timeUntilDueDate } from "./timeUntil";
 import { cardFactory } from "./newCard";
 import logo from './assets/logo.png'
 import css from "./style.css"
@@ -49,10 +47,7 @@ addItem(projectList[0].listOfLists[4].listOfItems)
 addItem(projectList[0].listOfLists[4].listOfItems)
 
 cardFactory(projectList[0].listOfLists[0])
-cardFactory(projectList[0].listOfLists[1])
-cardFactory(projectList[0].listOfLists[2])
-cardFactory(projectList[0].listOfLists[3])
-cardFactory(projectList[0].listOfLists[4])
+
 
 
 

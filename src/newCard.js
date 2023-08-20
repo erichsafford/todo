@@ -2,6 +2,8 @@ import iconEmptyBox from "./assets/emptybox.svg"
 import iconAdd from "./assets/add.svg"
 import iconEdit from "./assets/edit.svg"
 import iconDelete from "./assets/delete.svg"
+import { timeUntilDueDate } from "./timeUntil"
+import { remove } from "./remove"
 
 const cardFactory = (list) => {
     const displayArea = document.getElementById('main-content')
@@ -17,38 +19,57 @@ const cardFactory = (list) => {
     cardList.classList.add('flex-group', 'card-list-section')
 
     list.listOfItems.forEach((item) => {
-        const itemLine = document.createElement('div')
+        const itemGroup = document.createElement('div')     // Groups two lines: top is itemLine and bottom is due time
+        itemGroup.classList.add('item-group', 'flex-group')
+
+        //ITEM LINE
+        const itemLine = document.createElement('div')      // Create the line that has checkbox, title, edit, and delete
         itemLine.classList.add('entry-line', 'flex-group')
-        const checkBox = document.createElement('img')
+
+        //DUE TIME
+        const dueTime = document.createElement('p')         // Create due time paragraph
+        dueTime.classList.add('due-time')
+        dueTime.innerText = `Due: ${timeUntilDueDate(item.due)}`
+
+        //CHECKBOX
+        const checkBox = document.createElement('img')      // Create checkbox (1st line item)
+        checkBox.classList.add('box', 'unchecked', 'svg-class')
         checkBox.src = iconEmptyBox
-        checkBox.classList.add('box', 'unchecked')
-        itemLine.appendChild(checkBox)
-        const cardItem = document.createElement('p')
+        itemLine.appendChild(checkBox)                      // Append to itemLine
+
+        //TO-DO ITEM
+        const cardItem = document.createElement('p')        // Create to-do item (2nd line item)
         cardItem.classList.add('card-item', 'hover')
         cardItem.innerText = item.title
-        itemLine.appendChild(cardItem)
+        itemLine.appendChild(cardItem)                      // Append to itemLine
 
-        const btnEdit = document.createElement('img')
+        //EDIT BUTTON
+        const btnEdit = document.createElement('img')       // Create edit button (3rd line item)
+        btnEdit.classList.add('card-btn', 'hover-show', 'svg-class', 'edit')
         btnEdit.src = iconEdit
-        btnEdit.classList.add('card-btn', 'hover-show', 'edit')
-        itemLine.appendChild(btnEdit)
+        itemLine.appendChild(btnEdit)                       // Append to itemLine
 
-        const btnDelete = document.createElement('img')
+        //DELETE BUTTON
+        const btnDelete = document.createElement('img')     // Create delete button (4th line item)
         btnDelete.src = iconDelete
-        btnDelete.classList.add('card-btn', 'hover-show', 'delete')
-        itemLine.appendChild(btnDelete)
+        btnDelete.classList.add('card-btn', 'hover-show', 'svg-class', 'delete')
+        itemLine.appendChild(btnDelete)                     // Append to itemLine
+        btnDelete.addEventListener('click', remove(list, item))
 
-        cardList.appendChild(itemLine)
+        itemGroup.appendChild(itemLine)                     // Append constructed itemLine to itemGroup
+        itemGroup.appendChild(dueTime)                      // Append due tme to itemGroup
+        cardList.appendChild(itemGroup)                     // Append itemGroup to the card
     })
 
+    //BUTTON GROUP
     const btnGroup = document.createElement('div')
-    btnGroup.classList.add('btn-group')
+    btnGroup.classList.add('btn-group', 'flex-group')
+
+    //ADD NEW BUTTON
     const btnAdd = document.createElement('img')
     btnAdd.src = iconAdd
-    btnAdd.classList.add('card-btn', 'add')
+    btnAdd.classList.add('card-btn', 'add', 'svg-class')
     btnGroup.appendChild(btnAdd)
-
-
 
     cardDiv.appendChild(cardTitle)
     cardDiv.appendChild(cardList)
