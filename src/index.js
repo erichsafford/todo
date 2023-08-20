@@ -2,20 +2,59 @@ import { addProject } from "./addProject";
 import { addList } from "./addList";
 import { addItem } from "./addItem";
 import { toggleComplete } from "./toggleComplete";
+import { remove } from "./remove";
+import { timeUntilDueDate } from "./timeUntil";
+import { cardFactory } from "./newCard";
+import logo from './assets/logo.png'
+import css from "./style.css"
+
+const logoImg = document.getElementById('logoImg')
+logoImg.src = logo
 
 let projectList = []
-// let myProject = []
 addProject(projectList)
 addList(projectList[0].listOfLists)
 addItem(projectList[0].listOfLists[0].listOfItems)
 addItem(projectList[0].listOfLists[0].listOfItems)
 addItem(projectList[0].listOfLists[0].listOfItems)
+addItem(projectList[0].listOfLists[0].listOfItems)
 
-toggleComplete(projectList[0].listOfLists[0].listOfItems[1])
-toggleComplete(projectList[0].listOfLists[0].listOfItems[1])
-toggleComplete(projectList[0].listOfLists[0].listOfItems[2])
+addList(projectList[0].listOfLists)
+addItem(projectList[0].listOfLists[1].listOfItems)
+addItem(projectList[0].listOfLists[1].listOfItems)
+addItem(projectList[0].listOfLists[1].listOfItems)
+addItem(projectList[0].listOfLists[1].listOfItems)
 
-console.log(projectList[0].listOfLists[0].listOfItems)
+addList(projectList[0].listOfLists)
+addItem(projectList[0].listOfLists[2].listOfItems)
+addItem(projectList[0].listOfLists[2].listOfItems)
+addItem(projectList[0].listOfLists[2].listOfItems)
+addItem(projectList[0].listOfLists[2].listOfItems)
+
+addList(projectList[0].listOfLists)
+addItem(projectList[0].listOfLists[3].listOfItems)
+addItem(projectList[0].listOfLists[3].listOfItems)
+addItem(projectList[0].listOfLists[3].listOfItems)
+addItem(projectList[0].listOfLists[3].listOfItems)
+addItem(projectList[0].listOfLists[3].listOfItems)
+addItem(projectList[0].listOfLists[3].listOfItems)
+addItem(projectList[0].listOfLists[3].listOfItems)
+addItem(projectList[0].listOfLists[3].listOfItems)
+addItem(projectList[0].listOfLists[3].listOfItems)
+
+addList(projectList[0].listOfLists)
+addItem(projectList[0].listOfLists[4].listOfItems)
+addItem(projectList[0].listOfLists[4].listOfItems)
+addItem(projectList[0].listOfLists[4].listOfItems)
+addItem(projectList[0].listOfLists[4].listOfItems)
+
+cardFactory(projectList[0].listOfLists[0])
+cardFactory(projectList[0].listOfLists[1])
+cardFactory(projectList[0].listOfLists[2])
+cardFactory(projectList[0].listOfLists[3])
+cardFactory(projectList[0].listOfLists[4])
+
+
 
 
 

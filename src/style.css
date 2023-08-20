@@ -1,0 +1,228 @@
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@100;400;600;700&family=Playfair+Display:wght@400;600;800&display=swap');
+
+:root {
+	--color-main: rgba(51, 53, 51);
+	--color-dark: rgba(36, 36, 35);
+	--color-accent: rgba(255, 191, 252);
+	--color-light: rgba(232, 237, 223);
+	--color-mid: rgba(207, 219, 213);
+}
+
+::-webkit-scrollbar {
+    width: 2em;  /* Total width including `border-width` of scrollbar thumb */
+    height: 0;
+}
+::-webkit-scrollbar-thumb {
+    height: 1em;
+    border: 0.5em solid rgba(0, 0, 0, 0);  /* Transparent border together with `background-clip: padding-box` does the trick */
+    background-clip: padding-box;
+    -webkit-border-radius: 1em;
+    background-color: rgba(255, 191, 252, 0.6);
+    -webkit-box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.025);
+}
+::-webkit-scrollbar-button {
+    width: 0;
+    height: 0;
+    display: none;
+}
+::-webkit-scrollbar-corner {
+    background-color: transparent;
+}
+
+/* BEGIN RESET */
+/* http://meyerweb.com/eric/tools/css/reset/
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+	text-decoration: none;
+	color: inherit
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+/* END RESET */
+
+/* Utility Styles */
+.font-weight-800 {
+	font-weight: 800;
+}
+
+.flex-group {
+	display: flex;
+}
+
+.grid {
+	display: grid;
+}
+
+.hover {
+	transition: all 350ms;
+}
+
+.hover:hover {
+	color: var(--color-accent)
+}
+
+/* Specific Styles */
+body {
+	font-family: 'Josefin Sans', sans-serif;
+	background-color: var(--color-main);
+	color: var(--color-light);
+	box-sizing: border-box;
+}
+
+.link {
+	transition: all 350ms;
+	cursor: pointer;
+}
+
+#header {
+	background-color: var(--color-dark);
+	padding: 1rem;
+}
+
+#logoImg {
+	width: 70px;
+}
+
+#title-group {
+	flex-direction: column;
+	align-items: end;
+	margin-left: 1rem;
+}
+
+#header-title {
+	font-size: 3rem;
+	text-align: end;
+}
+
+#header-subtitle {
+	color: var(--color-accent);
+}
+
+#main-body {
+	grid-template-columns: 150px 1fr;
+	grid-template-rows: calc(100vh - 102px - 45px);
+}
+
+#nav {
+	background-color: var(--color-mid);
+	padding: 1rem;
+	color: var(--color-dark);
+	height: 100%;
+}
+
+.menu-item {
+	margin-block: .5rem;
+}
+
+#main-content {
+	grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+	grid-template-rows: max-content;
+	margin-top: 1rem;
+	margin-left: 1rem;
+	margin-bottom: 1rem;
+	gap: 1rem;
+	overflow-y: scroll;
+}
+
+/* Card styling */
+.list-card {
+	flex-direction: column;
+	border: 1px dashed white;
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+.card-title {
+	align-self: center;
+	font-weight: 700;
+	border-bottom: 1px solid var(--color-light);
+	margin-bottom: .5rem;
+}
+
+.card-list-section {
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.entry-line {
+	align-items: center;
+	gap: .5rem;
+	cursor: pointer;
+	color: var(--color-light);
+	fill: currentColor;
+}
+
+.card-item {
+	font-weight: 100;
+}
+
+.box:hover {
+	box-shadow: 0 0 10px white;
+}
+
+.hover-show {
+	display: none;
+	transition: all 350ms;
+}
+
+.entry-line:hover .hover-show {
+	display: unset;
+}
+
+.delete:hover {
+
+}
+
+footer {
+	position: absolute;
+	display: flex;
+	bottom: 0;
+	font-size: .67rem;
+	width: 100%;
+	height: 45px;
+	justify-content: space-around;
+	align-items: center;
+	background-color: var(--color-dark);
+}
