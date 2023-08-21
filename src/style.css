@@ -218,6 +218,10 @@ body {
 	text-align: end;
 }
 
+.svg-class {
+	filter: invert(96%) sepia(10%) saturate(360%) hue-rotate(43deg) brightness(105%) contrast(86%);
+}
+
 .svg-class:hover {
 	filter: invert(90%) sepia(94%) saturate(3261%) hue-rotate(211deg) brightness(102%) contrast(106%);
 }

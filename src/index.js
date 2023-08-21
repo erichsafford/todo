@@ -12,41 +12,20 @@ logoImg.src = logo
 let projectList = []
 addProject(projectList)
 addList(projectList[0].listOfLists)
-addItem(projectList[0].listOfLists[0].listOfItems)
-addItem(projectList[0].listOfLists[0].listOfItems)
-addItem(projectList[0].listOfLists[0].listOfItems)
-addItem(projectList[0].listOfLists[0].listOfItems)
-
 addList(projectList[0].listOfLists)
-addItem(projectList[0].listOfLists[1].listOfItems)
-addItem(projectList[0].listOfLists[1].listOfItems)
-addItem(projectList[0].listOfLists[1].listOfItems)
-addItem(projectList[0].listOfLists[1].listOfItems)
 
-addList(projectList[0].listOfLists)
-addItem(projectList[0].listOfLists[2].listOfItems)
-addItem(projectList[0].listOfLists[2].listOfItems)
-addItem(projectList[0].listOfLists[2].listOfItems)
-addItem(projectList[0].listOfLists[2].listOfItems)
+addItem(projectList[0].listOfLists[0].listOfItems, 'milk')
+addItem(projectList[0].listOfLists[0].listOfItems, 'bread')
+addItem(projectList[0].listOfLists[0].listOfItems, 'cheese')
+addItem(projectList[0].listOfLists[0].listOfItems, 'eggs')
 
-addList(projectList[0].listOfLists)
-addItem(projectList[0].listOfLists[3].listOfItems)
-addItem(projectList[0].listOfLists[3].listOfItems)
-addItem(projectList[0].listOfLists[3].listOfItems)
-addItem(projectList[0].listOfLists[3].listOfItems)
-addItem(projectList[0].listOfLists[3].listOfItems)
-addItem(projectList[0].listOfLists[3].listOfItems)
-addItem(projectList[0].listOfLists[3].listOfItems)
-addItem(projectList[0].listOfLists[3].listOfItems)
-addItem(projectList[0].listOfLists[3].listOfItems)
-
-addList(projectList[0].listOfLists)
-addItem(projectList[0].listOfLists[4].listOfItems)
-addItem(projectList[0].listOfLists[4].listOfItems)
-addItem(projectList[0].listOfLists[4].listOfItems)
-addItem(projectList[0].listOfLists[4].listOfItems)
+addItem(projectList[0].listOfLists[1].listOfItems, 'eggs')
+addItem(projectList[0].listOfLists[1].listOfItems, 'beer')
+addItem(projectList[0].listOfLists[1].listOfItems, 'bread')
+addItem(projectList[0].listOfLists[1].listOfItems, 'cheese')
 
 cardFactory(projectList[0].listOfLists[0])
+cardFactory(projectList[0].listOfLists[1])
 
 
 

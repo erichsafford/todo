@@ -2,6 +2,81 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
+/***/ "./src/addButton.js":
+/*!**************************!*\
+  !*** ./src/addButton.js ***!
+  \**************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   addButton: () => (/* binding */ addButton)
+/* harmony export */ });
+/* harmony import */ var _addItem__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./addItem */ "./src/addItem.js");
+/* harmony import */ var _assets_emptybox_svg__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./assets/emptybox.svg */ "./src/assets/emptybox.svg");
+/* harmony import */ var _assets_edit_svg__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./assets/edit.svg */ "./src/assets/edit.svg");
+/* harmony import */ var _assets_delete_svg__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./assets/delete.svg */ "./src/assets/delete.svg");
+/* harmony import */ var _timeUntil__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./timeUntil */ "./src/timeUntil.js");
+
+
+
+
+
+var addButton = function addButton(event, list) {
+  var currentCardItemBox = event.currentTarget.children[1];
+  var item = (0,_addItem__WEBPACK_IMPORTED_MODULE_0__.addItem)(list, 'hotdogs');
+  console.log(currentCardItemBox);
+  var itemGroup = document.createElement('div'); // Groups two lines: top is itemLine and bottom is due time
+  itemGroup.classList.add('item-group', 'flex-group', "item-group-$");
+
+  //ITEM LINE
+  var itemLine = document.createElement('div'); // Create the line that has checkbox, title, edit, and delete
+  itemLine.classList.add('entry-line', 'flex-group');
+
+  //DUE TIME
+  var dueTime = document.createElement('p'); // Create due time paragraph
+  dueTime.classList.add('due-time');
+  dueTime.innerText = "Due: ".concat((0,_timeUntil__WEBPACK_IMPORTED_MODULE_4__.timeUntilDueDate)(item.due));
+
+  //CHECKBOX
+  var checkBox = document.createElement('img'); // Create checkbox (1st line item)
+  checkBox.classList.add('box', 'unchecked', 'svg-class');
+  checkBox.id = 'checkbox';
+  checkBox.src = _assets_emptybox_svg__WEBPACK_IMPORTED_MODULE_1__;
+  itemLine.appendChild(checkBox); // Append to itemLine
+
+  //TO-DO ITEM
+  var cardItem = document.createElement('p'); // Create to-do item (2nd line item)
+  cardItem.classList.add('card-item', 'hover');
+  cardItem.innerText = item.title;
+  itemLine.appendChild(cardItem); // Append to itemLine
+
+  //EDIT BUTTON
+  var btnEdit = document.createElement('img'); // Create edit button (3rd line item)
+  btnEdit.classList.add('card-btn', 'hover-show', 'svg-class');
+  btnEdit.id = 'edit';
+  btnEdit.src = _assets_edit_svg__WEBPACK_IMPORTED_MODULE_2__;
+  itemLine.appendChild(btnEdit); // Append to itemLine
+
+  //DELETE BUTTON
+  var btnDelete = document.createElement('img'); // Create delete button (4th line item)
+  btnDelete.src = _assets_delete_svg__WEBPACK_IMPORTED_MODULE_3__;
+  btnDelete.classList.add('card-btn', 'hover-show', 'svg-class');
+  btnDelete.id = 'delete';
+  itemLine.appendChild(btnDelete); // Append to itemLine
+
+  itemGroup.appendChild(itemLine); // Append constructed itemLine to itemGroup
+  itemGroup.appendChild(dueTime); // Append due tme to itemGroup
+  currentCardItemBox.appendChild(itemGroup);
+
+  // const indexOfList = list.find((element) => element.title === listTitle)
+  // console.log(indexOfList)
+};
+
+
+
+/***/ }),
+
 /***/ "./src/addItem.js":
 /*!************************!*\
   !*** ./src/addItem.js ***!
@@ -14,17 +89,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _itemFactory__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./itemFactory */ "./src/itemFactory.js");
 
-var addItem = function addItem(list) {
+var addItem = function addItem(list, title) {
   // const title = prompt("Enter the title of the task:")
   // const desc = prompt("Enter the description of the task:")
   // const due = prompt("Enter the due date of the task:")
   // const priority = prompt("Enter the priority of the task:")
-  var title = 'Sick Title';
+  // const title = 'Sick Title'
   var desc = 'Sick desription';
   var due = new Date("10/30/2023");
   var priority = 'Sick priority';
   var newItem = new _itemFactory__WEBPACK_IMPORTED_MODULE_0__.Item(title, desc, due, priority);
   list.push(newItem);
+  return newItem;
 };
 
 
@@ -43,7 +119,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _listFactory__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./listFactory */ "./src/listFactory.js");
 
 var addList = function addList(project) {
-  var name = 'My Dummy List'; //Change this back to prompt when ready
+  var name = prompt("Enter List Name");
   var newItem = new _listFactory__WEBPACK_IMPORTED_MODULE_0__.List(name);
   project.push(newItem);
 };
@@ -68,6 +144,63 @@ var addProject = function addProject(projectList) {
   var name = 'myDummyProject';
   var newItem = new _projectFactory__WEBPACK_IMPORTED_MODULE_0__.Project(name);
   projectList.push(newItem);
+};
+
+
+/***/ }),
+
+/***/ "./src/edit.js":
+/*!*********************!*\
+  !*** ./src/edit.js ***!
+  \*********************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   editItem: () => (/* binding */ editItem)
+/* harmony export */ });
+var editItem = function editItem(event, list) {
+  var currentItem = event.target.parentElement.children[1];
+  var currentText = event.target.parentElement.children[1].innerText;
+  var newText = prompt("Enter the new text");
+  console.log(currentText);
+  var indexOfItem = list.find(function (element) {
+    return element.title === currentText;
+  });
+  indexOfItem.title = newText;
+  currentItem.innerText = newText;
+  console.log(list);
+};
+
+
+/***/ }),
+
+/***/ "./src/eventHandler.js":
+/*!*****************************!*\
+  !*** ./src/eventHandler.js ***!
+  \*****************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   eventHandler: () => (/* binding */ eventHandler)
+/* harmony export */ });
+/* harmony import */ var _edit__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./edit */ "./src/edit.js");
+/* harmony import */ var _addButton__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./addButton */ "./src/addButton.js");
+
+
+var eventHandler = function eventHandler(event, list) {
+  if (event.target.id === "delete") {
+    console.log(event.target.parentElement.children);
+  } else if (event.target.id === "edit") {
+    (0,_edit__WEBPACK_IMPORTED_MODULE_0__.editItem)(event, list);
+  } else if (event.target.id === "checkbox") {
+    console.log(event.target);
+  } else if (event.target.id === "add") {
+    (0,_addButton__WEBPACK_IMPORTED_MODULE_1__.addButton)(event, list);
+  } else {
+    console.log('Nothing');
+  }
 };
 
 
@@ -118,9 +251,9 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
 function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
 var List = /*#__PURE__*/function () {
-  function List(name) {
+  function List(title) {
     _classCallCheck(this, List);
-    this.name = name;
+    this.title = title;
     this.listOfItems = [];
   }
   _createClass(List, [{
@@ -154,8 +287,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _assets_add_svg__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./assets/add.svg */ "./src/assets/add.svg");
 /* harmony import */ var _assets_edit_svg__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./assets/edit.svg */ "./src/assets/edit.svg");
 /* harmony import */ var _assets_delete_svg__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./assets/delete.svg */ "./src/assets/delete.svg");
-/* harmony import */ var _timeUntil__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./timeUntil */ "./src/timeUntil.js");
-/* harmony import */ var _remove__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./remove */ "./src/remove.js");
+/* harmony import */ var _eventHandler__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./eventHandler */ "./src/eventHandler.js");
+/* harmony import */ var _timeUntil__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./timeUntil */ "./src/timeUntil.js");
 
 
 
@@ -166,14 +299,17 @@ var cardFactory = function cardFactory(list) {
   var displayArea = document.getElementById('main-content');
   var cardDiv = document.createElement('div');
   cardDiv.classList.add('list-card', 'flex-group');
+  cardDiv.addEventListener('click', function (e) {
+    (0,_eventHandler__WEBPACK_IMPORTED_MODULE_4__.eventHandler)(e, list.listOfItems);
+  });
   var cardTitle = document.createElement('h2');
   cardTitle.classList.add('card-title');
-  cardTitle.innerText = list.name;
+  cardTitle.innerText = list.title;
   var cardList = document.createElement('div');
   cardList.classList.add('flex-group', 'card-list-section');
   list.listOfItems.forEach(function (item) {
     var itemGroup = document.createElement('div'); // Groups two lines: top is itemLine and bottom is due time
-    itemGroup.classList.add('item-group', 'flex-group');
+    itemGroup.classList.add('item-group', 'flex-group', "item-group-$");
 
     //ITEM LINE
     var itemLine = document.createElement('div'); // Create the line that has checkbox, title, edit, and delete
@@ -182,11 +318,12 @@ var cardFactory = function cardFactory(list) {
     //DUE TIME
     var dueTime = document.createElement('p'); // Create due time paragraph
     dueTime.classList.add('due-time');
-    dueTime.innerText = "Due: ".concat((0,_timeUntil__WEBPACK_IMPORTED_MODULE_4__.timeUntilDueDate)(item.due));
+    dueTime.innerText = "Due: ".concat((0,_timeUntil__WEBPACK_IMPORTED_MODULE_5__.timeUntilDueDate)(item.due));
 
     //CHECKBOX
     var checkBox = document.createElement('img'); // Create checkbox (1st line item)
     checkBox.classList.add('box', 'unchecked', 'svg-class');
+    checkBox.id = 'checkbox';
     checkBox.src = _assets_emptybox_svg__WEBPACK_IMPORTED_MODULE_0__;
     itemLine.appendChild(checkBox); // Append to itemLine
 
@@ -198,16 +335,18 @@ var cardFactory = function cardFactory(list) {
 
     //EDIT BUTTON
     var btnEdit = document.createElement('img'); // Create edit button (3rd line item)
-    btnEdit.classList.add('card-btn', 'hover-show', 'svg-class', 'edit');
+    btnEdit.classList.add('card-btn', 'hover-show', 'svg-class');
+    btnEdit.id = 'edit';
     btnEdit.src = _assets_edit_svg__WEBPACK_IMPORTED_MODULE_2__;
     itemLine.appendChild(btnEdit); // Append to itemLine
 
     //DELETE BUTTON
     var btnDelete = document.createElement('img'); // Create delete button (4th line item)
     btnDelete.src = _assets_delete_svg__WEBPACK_IMPORTED_MODULE_3__;
-    btnDelete.classList.add('card-btn', 'hover-show', 'svg-class', 'delete');
+    btnDelete.classList.add('card-btn', 'hover-show', 'svg-class');
+    btnDelete.id = 'delete';
     itemLine.appendChild(btnDelete); // Append to itemLine
-    btnDelete.addEventListener('click', (0,_remove__WEBPACK_IMPORTED_MODULE_5__.remove)(list, item));
+
     itemGroup.appendChild(itemLine); // Append constructed itemLine to itemGroup
     itemGroup.appendChild(dueTime); // Append due tme to itemGroup
     cardList.appendChild(itemGroup); // Append itemGroup to the card
@@ -220,7 +359,8 @@ var cardFactory = function cardFactory(list) {
   //ADD NEW BUTTON
   var btnAdd = document.createElement('img');
   btnAdd.src = _assets_add_svg__WEBPACK_IMPORTED_MODULE_1__;
-  btnAdd.classList.add('card-btn', 'add', 'svg-class');
+  btnAdd.classList.add('card-btn', 'svg-class');
+  btnAdd.id = 'add';
   btnGroup.appendChild(btnAdd);
   cardDiv.appendChild(cardTitle);
   cardDiv.appendChild(cardList);
@@ -252,26 +392,6 @@ var Project = /*#__PURE__*/_createClass(function Project(name) {
   this.name = name;
   this.listOfLists = [];
 });
-
-
-/***/ }),
-
-/***/ "./src/remove.js":
-/*!***********************!*\
-  !*** ./src/remove.js ***!
-  \***********************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   remove: () => (/* binding */ remove)
-/* harmony export */ });
-/* harmony import */ var _newCard__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./newCard */ "./src/newCard.js");
-
-var remove = function remove(container, item) {
-  container.listOfItems.splice(container.listOfItems.indexOf(item), 1);
-  console.log(container.listOfItems);
-};
 
 
 /***/ }),
@@ -562,6 +682,10 @@ body {
   text-align: end;
 }
 
+.svg-class {
+  filter: invert(96%) sepia(10%) saturate(360%) hue-rotate(43deg) brightness(105%) contrast(86%);
+}
+
 .svg-class:hover {
   filter: invert(90%) sepia(94%) saturate(3261%) hue-rotate(211deg) brightness(102%) contrast(106%);
 }
@@ -590,7 +714,7 @@ footer {
   justify-content: space-around;
   align-items: center;
   background-color: var(--color-dark);
-}`, "",{"version":3,"sources":["webpack://./src/style.css"],"names":[],"mappings":"AAEA;EACC,8BAAA;EACA,8BAAA;EACA,mCAAA;EACA,kCAAA;EACA,gCAAA;AAAD;;AAGA;EACI,UAAA,EAAA,4DAAA;EACA,SAAA;AAAJ;;AAEA;EACI,WAAA;EACA,oCAAA,EAAA,mFAAA;EACA,4BAAA;EACA,0BAAA;EACA,0CAAA;EACA,wDAAA;AACJ;;AACA;EACI,QAAA;EACA,SAAA;EACA,aAAA;AAEJ;;AAAA;EACI,6BAAA;AAGJ;;AAAA,gBAAA;AACA;;;CAAA;AAKA;;;;;;;;;;;;;EAaC,SAAA;EACA,UAAA;EACA,SAAA;EACA,eAAA;EACA,aAAA;EACA,wBAAA;EACA,qBAAA;EACA,cAAA;AAED;;AAAA,gDAAA;AACA;;EAEC,cAAA;AAGD;;AADA;EACC,cAAA;AAID;;AAFA;EACC,gBAAA;AAKD;;AAHA;EACC,YAAA;AAMD;;AAJA;;EAEC,WAAA;EACA,aAAA;AAOD;;AALA;EACC,yBAAA;EACA,iBAAA;AAQD;;AANA,cAAA;AAEA,mBAAA;AACA;EACC,gBAAA;AAQD;;AALA;EACC,aAAA;AAQD;;AALA;EACC,aAAA;AAQD;;AALA;EACC,qBAAA;AAQD;;AALA;EACC,0BAAA;AAQD;;AALA,oBAAA;AACA;EACC,uCAAA;EACA,mCAAA;EACA,yBAAA;EACA,sBAAA;AAQD;;AALA;EACC,qBAAA;EACA,eAAA;AAQD;;AALA;EACC,mCAAA;EACA,aAAA;AAQD;;AALA;EACC,WAAA;AAQD;;AALA;EACC,sBAAA;EACA,gBAAA;EACA,iBAAA;AAQD;;AALA;EACC,eAAA;EACA,eAAA;AAQD;;AALA;EACC,0BAAA;EACA,kBAAA;AAQD;;AALA;EACC,gCAAA;EACA,8CAAA;AAQD;;AALA;EACC,kCAAA;EACA,aAAA;EACA,wBAAA;EACA,YAAA;AAQD;;AALA;EACC,oBAAA;AAQD;;AALA;EACC,2DAAA;EACA,+BAAA;EACA,gBAAA;EACA,iBAAA;EACA,mBAAA;EACA,SAAA;EACA,kBAAA;AAQD;;AALA,iBAAA;AACA;EACC,sBAAA;EACA,wBAAA;EACA,mBAAA;EACA,aAAA;EACA,QAAA;AAQD;;AALA;EACC,kBAAA;EACA,gBAAA;EACA,kBAAA;EACA,2CAAA;EACA,qBAAA;EACA,kBAAA;AAQD;;AALA;EACC,sBAAA;EACA,8BAAA;EACA,SAAA;AAQD;;AALA;EACC,sBAAA;EACA,QAAA;EACA,0CAAA;AAQD;;AALA;EACC,mBAAA;EACA,WAAA;EACA,eAAA;EACA,yBAAA;AAQD;;AALA;EACC,iBAAA;AAQD;;AALA;EACC,gBAAA;AAQD;;AALA;EACC,gBAAA;EACA,eAAA;EACA,eAAA;AAQD;;AALA;EACC,iGAAA;AAQD;;AALA;EACC,aAAA;EACA,yBAAA;AAQD;;AALA;EACC,cAAA;AAQD;;AALA;EACC,oBAAA;EACA,gBAAA;AAQD;;AALA;EACC,kBAAA;EACA,aAAA;EACA,SAAA;EACA,kBAAA;EACA,WAAA;EACA,YAAA;EACA,6BAAA;EACA,mBAAA;EACA,mCAAA;AAQD","sourcesContent":["@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@100;400;600;700&family=Playfair+Display:wght@400;600;800&display=swap');\n\n:root {\n\t--color-main: rgba(51, 53, 51);\n\t--color-dark: rgba(36, 36, 35);\n\t--color-accent: rgba(255, 191, 252);\n\t--color-light: rgba(232, 237, 223);\n\t--color-mid: rgba(207, 219, 213);\n}\n\n::-webkit-scrollbar {\n    width: 2em;  /* Total width including `border-width` of scrollbar thumb */\n    height: 0;\n}\n::-webkit-scrollbar-thumb {\n    height: 1em;\n    border: 0.5em solid rgba(0, 0, 0, 0);  /* Transparent border together with `background-clip: padding-box` does the trick */\n    background-clip: padding-box;\n    -webkit-border-radius: 1em;\n    background-color: rgba(255, 191, 252, 0.6);\n    -webkit-box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.025);\n}\n::-webkit-scrollbar-button {\n    width: 0;\n    height: 0;\n    display: none;\n}\n::-webkit-scrollbar-corner {\n    background-color: transparent;\n}\n\n/* BEGIN RESET */\n/* http://meyerweb.com/eric/tools/css/reset/\n   v2.0 | 20110126\n   License: none (public domain)\n*/\n\nhtml, body, div, span, applet, object, iframe,\nh1, h2, h3, h4, h5, h6, p, blockquote, pre,\na, abbr, acronym, address, big, cite, code,\ndel, dfn, em, img, ins, kbd, q, s, samp,\nsmall, strike, strong, sub, sup, tt, var,\nb, u, i, center,\ndl, dt, dd, ol, ul, li,\nfieldset, form, label, legend,\ntable, caption, tbody, tfoot, thead, tr, th, td,\narticle, aside, canvas, details, embed,\nfigure, figcaption, footer, header, hgroup,\nmenu, nav, output, ruby, section, summary,\ntime, mark, audio, video {\n\tmargin: 0;\n\tpadding: 0;\n\tborder: 0;\n\tfont-size: 100%;\n\tfont: inherit;\n\tvertical-align: baseline;\n\ttext-decoration: none;\n\tcolor: inherit\n}\n/* HTML5 display-role reset for older browsers */\narticle, aside, details, figcaption, figure,\nfooter, header, hgroup, menu, nav, section {\n\tdisplay: block;\n}\nbody {\n\tline-height: 1;\n}\nol, ul {\n\tlist-style: none;\n}\nblockquote, q {\n\tquotes: none;\n}\nblockquote:before, blockquote:after,\nq:before, q:after {\n\tcontent: '';\n\tcontent: none;\n}\ntable {\n\tborder-collapse: collapse;\n\tborder-spacing: 0;\n}\n/* END RESET */\n\n/* Utility Styles */\n.font-weight-800 {\n\tfont-weight: 800;\n}\n\n.flex-group {\n\tdisplay: flex;\n}\n\n.grid {\n\tdisplay: grid;\n}\n\n.hover {\n\ttransition: all 350ms;\n}\n\n.hover:hover {\n\tcolor: var(--color-accent)\n}\n\n/* Specific Styles */\nbody {\n\tfont-family: 'Josefin Sans', sans-serif;\n\tbackground-color: var(--color-main);\n\tcolor: var(--color-light);\n\tbox-sizing: border-box;\n}\n\n.link {\n\ttransition: all 350ms;\n\tcursor: pointer;\n}\n\n#header {\n\tbackground-color: var(--color-dark);\n\tpadding: 1rem;\n}\n\n#logoImg {\n\twidth: 70px;\n}\n\n#title-group {\n\tflex-direction: column;\n\talign-items: end;\n\tmargin-left: 1rem;\n}\n\n#header-title {\n\tfont-size: 3rem;\n\ttext-align: end;\n}\n\n#header-subtitle {\n\tcolor: var(--color-accent);\n\tfont-style: italic;\n}\n\n#main-body {\n\tgrid-template-columns: 150px 1fr;\n\tgrid-template-rows: calc(100vh - 102px - 45px);\n}\n\n#nav {\n\tbackground-color: var(--color-mid);\n\tpadding: 1rem;\n\tcolor: var(--color-dark);\n\theight: 100%;\n}\n\n.menu-item {\n\tmargin-block: .5rem;\n}\n\n#main-content {\n\tgrid-template-columns: repeat(auto-fit, minmax(200px, 1fr));\n\tgrid-template-rows: max-content;\n\tmargin-top: 1rem;\n\tmargin-left: 1rem;\n\tmargin-bottom: 1rem;\n\tgap: 1rem;\n\toverflow-y: scroll;\n}\n\n/* Card styling */\n.list-card {\n\tflex-direction: column;\n\tborder: 1px dashed white;\n\tborder-radius: 10px;\n\tpadding: 1rem;\n\tgap: 5px;\n}\n\n.card-title {\n\talign-self: center;\n\tfont-weight: 700;\n\tfont-size: 1.25rem;\n\tborder-bottom: 1px solid var(--color-light);\n\tmargin-bottom: .5rem;\n\ttext-align: center;\n}\n\n.card-list-section {\n\tflex-direction: column;\n\tjustify-content: space-between;\n\tgap: 10px;\n}\n\n.item-group {\n\tflex-direction: column;\n\tgap: 3px;\n\tborder-bottom: 2px solid var(--color-dark);\n}\n\n.entry-line {\n\talign-items: center;\n\tgap: .5rem;\n\tcursor: pointer;\n\tcolor: var(--color-light);\n}\n\n.edit {\n\tmargin-left: auto;\n}\n\n.card-item {\n\tfont-weight: 400;\n}\n\n.due-time {\n\tfont-weight: 100;\n\tfont-size: 1rem;\n\ttext-align: end;\n}\n\n.svg-class:hover {\n\tfilter: invert(90%) sepia(94%) saturate(3261%) hue-rotate(211deg) brightness(102%) contrast(106%);\n}\n\n.hover-show {\n\tdisplay: none;\n\ttransition: display 350ms;\n}\n\n.entry-line:hover .hover-show {\n\tdisplay: unset;\n}\n\n.btn-group {\n\tjustify-content: end;\n\tmargin-top: 1rem;\n}\n\nfooter {\n\tposition: absolute;\n\tdisplay: flex;\n\tbottom: 0;\n\tfont-size: .67rem;\n\twidth: 100%;\n\theight: 45px;\n\tjustify-content: space-around;\n\talign-items: center;\n\tbackground-color: var(--color-dark);\n}"],"sourceRoot":""}]);
+}`, "",{"version":3,"sources":["webpack://./src/style.css"],"names":[],"mappings":"AAEA;EACC,8BAAA;EACA,8BAAA;EACA,mCAAA;EACA,kCAAA;EACA,gCAAA;AAAD;;AAGA;EACI,UAAA,EAAA,4DAAA;EACA,SAAA;AAAJ;;AAEA;EACI,WAAA;EACA,oCAAA,EAAA,mFAAA;EACA,4BAAA;EACA,0BAAA;EACA,0CAAA;EACA,wDAAA;AACJ;;AACA;EACI,QAAA;EACA,SAAA;EACA,aAAA;AAEJ;;AAAA;EACI,6BAAA;AAGJ;;AAAA,gBAAA;AACA;;;CAAA;AAKA;;;;;;;;;;;;;EAaC,SAAA;EACA,UAAA;EACA,SAAA;EACA,eAAA;EACA,aAAA;EACA,wBAAA;EACA,qBAAA;EACA,cAAA;AAED;;AAAA,gDAAA;AACA;;EAEC,cAAA;AAGD;;AADA;EACC,cAAA;AAID;;AAFA;EACC,gBAAA;AAKD;;AAHA;EACC,YAAA;AAMD;;AAJA;;EAEC,WAAA;EACA,aAAA;AAOD;;AALA;EACC,yBAAA;EACA,iBAAA;AAQD;;AANA,cAAA;AAEA,mBAAA;AACA;EACC,gBAAA;AAQD;;AALA;EACC,aAAA;AAQD;;AALA;EACC,aAAA;AAQD;;AALA;EACC,qBAAA;AAQD;;AALA;EACC,0BAAA;AAQD;;AALA,oBAAA;AACA;EACC,uCAAA;EACA,mCAAA;EACA,yBAAA;EACA,sBAAA;AAQD;;AALA;EACC,qBAAA;EACA,eAAA;AAQD;;AALA;EACC,mCAAA;EACA,aAAA;AAQD;;AALA;EACC,WAAA;AAQD;;AALA;EACC,sBAAA;EACA,gBAAA;EACA,iBAAA;AAQD;;AALA;EACC,eAAA;EACA,eAAA;AAQD;;AALA;EACC,0BAAA;EACA,kBAAA;AAQD;;AALA;EACC,gCAAA;EACA,8CAAA;AAQD;;AALA;EACC,kCAAA;EACA,aAAA;EACA,wBAAA;EACA,YAAA;AAQD;;AALA;EACC,oBAAA;AAQD;;AALA;EACC,2DAAA;EACA,+BAAA;EACA,gBAAA;EACA,iBAAA;EACA,mBAAA;EACA,SAAA;EACA,kBAAA;AAQD;;AALA,iBAAA;AACA;EACC,sBAAA;EACA,wBAAA;EACA,mBAAA;EACA,aAAA;EACA,QAAA;AAQD;;AALA;EACC,kBAAA;EACA,gBAAA;EACA,kBAAA;EACA,2CAAA;EACA,qBAAA;EACA,kBAAA;AAQD;;AALA;EACC,sBAAA;EACA,8BAAA;EACA,SAAA;AAQD;;AALA;EACC,sBAAA;EACA,QAAA;EACA,0CAAA;AAQD;;AALA;EACC,mBAAA;EACA,WAAA;EACA,eAAA;EACA,yBAAA;AAQD;;AALA;EACC,iBAAA;AAQD;;AALA;EACC,gBAAA;AAQD;;AALA;EACC,gBAAA;EACA,eAAA;EACA,eAAA;AAQD;;AALA;EACC,8FAAA;AAQD;;AALA;EACC,iGAAA;AAQD;;AALA;EACC,aAAA;EACA,yBAAA;AAQD;;AALA;EACC,cAAA;AAQD;;AALA;EACC,oBAAA;EACA,gBAAA;AAQD;;AALA;EACC,kBAAA;EACA,aAAA;EACA,SAAA;EACA,kBAAA;EACA,WAAA;EACA,YAAA;EACA,6BAAA;EACA,mBAAA;EACA,mCAAA;AAQD","sourcesContent":["@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@100;400;600;700&family=Playfair+Display:wght@400;600;800&display=swap');\n\n:root {\n\t--color-main: rgba(51, 53, 51);\n\t--color-dark: rgba(36, 36, 35);\n\t--color-accent: rgba(255, 191, 252);\n\t--color-light: rgba(232, 237, 223);\n\t--color-mid: rgba(207, 219, 213);\n}\n\n::-webkit-scrollbar {\n    width: 2em;  /* Total width including `border-width` of scrollbar thumb */\n    height: 0;\n}\n::-webkit-scrollbar-thumb {\n    height: 1em;\n    border: 0.5em solid rgba(0, 0, 0, 0);  /* Transparent border together with `background-clip: padding-box` does the trick */\n    background-clip: padding-box;\n    -webkit-border-radius: 1em;\n    background-color: rgba(255, 191, 252, 0.6);\n    -webkit-box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.025);\n}\n::-webkit-scrollbar-button {\n    width: 0;\n    height: 0;\n    display: none;\n}\n::-webkit-scrollbar-corner {\n    background-color: transparent;\n}\n\n/* BEGIN RESET */\n/* http://meyerweb.com/eric/tools/css/reset/\n   v2.0 | 20110126\n   License: none (public domain)\n*/\n\nhtml, body, div, span, applet, object, iframe,\nh1, h2, h3, h4, h5, h6, p, blockquote, pre,\na, abbr, acronym, address, big, cite, code,\ndel, dfn, em, img, ins, kbd, q, s, samp,\nsmall, strike, strong, sub, sup, tt, var,\nb, u, i, center,\ndl, dt, dd, ol, ul, li,\nfieldset, form, label, legend,\ntable, caption, tbody, tfoot, thead, tr, th, td,\narticle, aside, canvas, details, embed,\nfigure, figcaption, footer, header, hgroup,\nmenu, nav, output, ruby, section, summary,\ntime, mark, audio, video {\n\tmargin: 0;\n\tpadding: 0;\n\tborder: 0;\n\tfont-size: 100%;\n\tfont: inherit;\n\tvertical-align: baseline;\n\ttext-decoration: none;\n\tcolor: inherit\n}\n/* HTML5 display-role reset for older browsers */\narticle, aside, details, figcaption, figure,\nfooter, header, hgroup, menu, nav, section {\n\tdisplay: block;\n}\nbody {\n\tline-height: 1;\n}\nol, ul {\n\tlist-style: none;\n}\nblockquote, q {\n\tquotes: none;\n}\nblockquote:before, blockquote:after,\nq:before, q:after {\n\tcontent: '';\n\tcontent: none;\n}\ntable {\n\tborder-collapse: collapse;\n\tborder-spacing: 0;\n}\n/* END RESET */\n\n/* Utility Styles */\n.font-weight-800 {\n\tfont-weight: 800;\n}\n\n.flex-group {\n\tdisplay: flex;\n}\n\n.grid {\n\tdisplay: grid;\n}\n\n.hover {\n\ttransition: all 350ms;\n}\n\n.hover:hover {\n\tcolor: var(--color-accent)\n}\n\n/* Specific Styles */\nbody {\n\tfont-family: 'Josefin Sans', sans-serif;\n\tbackground-color: var(--color-main);\n\tcolor: var(--color-light);\n\tbox-sizing: border-box;\n}\n\n.link {\n\ttransition: all 350ms;\n\tcursor: pointer;\n}\n\n#header {\n\tbackground-color: var(--color-dark);\n\tpadding: 1rem;\n}\n\n#logoImg {\n\twidth: 70px;\n}\n\n#title-group {\n\tflex-direction: column;\n\talign-items: end;\n\tmargin-left: 1rem;\n}\n\n#header-title {\n\tfont-size: 3rem;\n\ttext-align: end;\n}\n\n#header-subtitle {\n\tcolor: var(--color-accent);\n\tfont-style: italic;\n}\n\n#main-body {\n\tgrid-template-columns: 150px 1fr;\n\tgrid-template-rows: calc(100vh - 102px - 45px);\n}\n\n#nav {\n\tbackground-color: var(--color-mid);\n\tpadding: 1rem;\n\tcolor: var(--color-dark);\n\theight: 100%;\n}\n\n.menu-item {\n\tmargin-block: .5rem;\n}\n\n#main-content {\n\tgrid-template-columns: repeat(auto-fit, minmax(200px, 1fr));\n\tgrid-template-rows: max-content;\n\tmargin-top: 1rem;\n\tmargin-left: 1rem;\n\tmargin-bottom: 1rem;\n\tgap: 1rem;\n\toverflow-y: scroll;\n}\n\n/* Card styling */\n.list-card {\n\tflex-direction: column;\n\tborder: 1px dashed white;\n\tborder-radius: 10px;\n\tpadding: 1rem;\n\tgap: 5px;\n}\n\n.card-title {\n\talign-self: center;\n\tfont-weight: 700;\n\tfont-size: 1.25rem;\n\tborder-bottom: 1px solid var(--color-light);\n\tmargin-bottom: .5rem;\n\ttext-align: center;\n}\n\n.card-list-section {\n\tflex-direction: column;\n\tjustify-content: space-between;\n\tgap: 10px;\n}\n\n.item-group {\n\tflex-direction: column;\n\tgap: 3px;\n\tborder-bottom: 2px solid var(--color-dark);\n}\n\n.entry-line {\n\talign-items: center;\n\tgap: .5rem;\n\tcursor: pointer;\n\tcolor: var(--color-light);\n}\n\n.edit {\n\tmargin-left: auto;\n}\n\n.card-item {\n\tfont-weight: 400;\n}\n\n.due-time {\n\tfont-weight: 100;\n\tfont-size: 1rem;\n\ttext-align: end;\n}\n\n.svg-class {\n\tfilter: invert(96%) sepia(10%) saturate(360%) hue-rotate(43deg) brightness(105%) contrast(86%);\n}\n\n.svg-class:hover {\n\tfilter: invert(90%) sepia(94%) saturate(3261%) hue-rotate(211deg) brightness(102%) contrast(106%);\n}\n\n.hover-show {\n\tdisplay: none;\n\ttransition: display 350ms;\n}\n\n.entry-line:hover .hover-show {\n\tdisplay: unset;\n}\n\n.btn-group {\n\tjustify-content: end;\n\tmargin-top: 1rem;\n}\n\nfooter {\n\tposition: absolute;\n\tdisplay: flex;\n\tbottom: 0;\n\tfont-size: .67rem;\n\twidth: 100%;\n\theight: 45px;\n\tjustify-content: space-around;\n\talign-items: center;\n\tbackground-color: var(--color-dark);\n}"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -2712,38 +2836,19 @@ logoImg.src = _assets_logo_png__WEBPACK_IMPORTED_MODULE_5__;
 var projectList = [];
 (0,_addProject__WEBPACK_IMPORTED_MODULE_0__.addProject)(projectList);
 (0,_addList__WEBPACK_IMPORTED_MODULE_1__.addList)(projectList[0].listOfLists);
-(0,_addItem__WEBPACK_IMPORTED_MODULE_2__.addItem)(projectList[0].listOfLists[0].listOfItems);
-(0,_addItem__WEBPACK_IMPORTED_MODULE_2__.addItem)(projectList[0].listOfLists[0].listOfItems);
-(0,_addItem__WEBPACK_IMPORTED_MODULE_2__.addItem)(projectList[0].listOfLists[0].listOfItems);
-(0,_addItem__WEBPACK_IMPORTED_MODULE_2__.addItem)(projectList[0].listOfLists[0].listOfItems);
 (0,_addList__WEBPACK_IMPORTED_MODULE_1__.addList)(projectList[0].listOfLists);
-(0,_addItem__WEBPACK_IMPORTED_MODULE_2__.addItem)(projectList[0].listOfLists[1].listOfItems);
-(0,_addItem__WEBPACK_IMPORTED_MODULE_2__.addItem)(projectList[0].listOfLists[1].listOfItems);
-(0,_addItem__WEBPACK_IMPORTED_MODULE_2__.addItem)(projectList[0].listOfLists[1].listOfItems);
-(0,_addItem__WEBPACK_IMPORTED_MODULE_2__.addItem)(projectList[0].listOfLists[1].listOfItems);
-(0,_addList__WEBPACK_IMPORTED_MODULE_1__.addList)(projectList[0].listOfLists);
-(0,_addItem__WEBPACK_IMPORTED_MODULE_2__.addItem)(projectList[0].listOfLists[2].listOfItems);
-(0,_addItem__WEBPACK_IMPORTED_MODULE_2__.addItem)(projectList[0].listOfLists[2].listOfItems);
-(0,_addItem__WEBPACK_IMPORTED_MODULE_2__.addItem)(projectList[0].listOfLists[2].listOfItems);
-(0,_addItem__WEBPACK_IMPORTED_MODULE_2__.addItem)(projectList[0].listOfLists[2].listOfItems);
-(0,_addList__WEBPACK_IMPORTED_MODULE_1__.addList)(projectList[0].listOfLists);
-(0,_addItem__WEBPACK_IMPORTED_MODULE_2__.addItem)(projectList[0].listOfLists[3].listOfItems);
-(0,_addItem__WEBPACK_IMPORTED_MODULE_2__.addItem)(projectList[0].listOfLists[3].listOfItems);
-(0,_addItem__WEBPACK_IMPORTED_MODULE_2__.addItem)(projectList[0].listOfLists[3].listOfItems);
-(0,_addItem__WEBPACK_IMPORTED_MODULE_2__.addItem)(projectList[0].listOfLists[3].listOfItems);
-(0,_addItem__WEBPACK_IMPORTED_MODULE_2__.addItem)(projectList[0].listOfLists[3].listOfItems);
-(0,_addItem__WEBPACK_IMPORTED_MODULE_2__.addItem)(projectList[0].listOfLists[3].listOfItems);
-(0,_addItem__WEBPACK_IMPORTED_MODULE_2__.addItem)(projectList[0].listOfLists[3].listOfItems);
-(0,_addItem__WEBPACK_IMPORTED_MODULE_2__.addItem)(projectList[0].listOfLists[3].listOfItems);
-(0,_addItem__WEBPACK_IMPORTED_MODULE_2__.addItem)(projectList[0].listOfLists[3].listOfItems);
-(0,_addList__WEBPACK_IMPORTED_MODULE_1__.addList)(projectList[0].listOfLists);
-(0,_addItem__WEBPACK_IMPORTED_MODULE_2__.addItem)(projectList[0].listOfLists[4].listOfItems);
-(0,_addItem__WEBPACK_IMPORTED_MODULE_2__.addItem)(projectList[0].listOfLists[4].listOfItems);
-(0,_addItem__WEBPACK_IMPORTED_MODULE_2__.addItem)(projectList[0].listOfLists[4].listOfItems);
-(0,_addItem__WEBPACK_IMPORTED_MODULE_2__.addItem)(projectList[0].listOfLists[4].listOfItems);
+(0,_addItem__WEBPACK_IMPORTED_MODULE_2__.addItem)(projectList[0].listOfLists[0].listOfItems, 'milk');
+(0,_addItem__WEBPACK_IMPORTED_MODULE_2__.addItem)(projectList[0].listOfLists[0].listOfItems, 'bread');
+(0,_addItem__WEBPACK_IMPORTED_MODULE_2__.addItem)(projectList[0].listOfLists[0].listOfItems, 'cheese');
+(0,_addItem__WEBPACK_IMPORTED_MODULE_2__.addItem)(projectList[0].listOfLists[0].listOfItems, 'eggs');
+(0,_addItem__WEBPACK_IMPORTED_MODULE_2__.addItem)(projectList[0].listOfLists[1].listOfItems, 'eggs');
+(0,_addItem__WEBPACK_IMPORTED_MODULE_2__.addItem)(projectList[0].listOfLists[1].listOfItems, 'beer');
+(0,_addItem__WEBPACK_IMPORTED_MODULE_2__.addItem)(projectList[0].listOfLists[1].listOfItems, 'bread');
+(0,_addItem__WEBPACK_IMPORTED_MODULE_2__.addItem)(projectList[0].listOfLists[1].listOfItems, 'cheese');
 (0,_newCard__WEBPACK_IMPORTED_MODULE_4__.cardFactory)(projectList[0].listOfLists[0]);
+(0,_newCard__WEBPACK_IMPORTED_MODULE_4__.cardFactory)(projectList[0].listOfLists[1]);
 })();
 
 /******/ })()
 ;
-//# sourceMappingURL=bundlea85c90f71e2a93cf508f.js.map
+//# sourceMappingURL=bundle56faf97a15a311724198.js.map

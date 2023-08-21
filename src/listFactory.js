@@ -1,6 +1,6 @@
 class List {
-    constructor(name) {
-        this.name = name
+    constructor(title) {
+        this.title = title
         this.listOfItems = []
     };
 
